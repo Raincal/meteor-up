@@ -14,7 +14,7 @@ docker rm -f $APPNAME-frontend
 
 # We don't need to fail the deployment because of a docker hub downtime
 set +e
-docker pull <%= image %>
+dao pull <%= image %>
 set -e
 
 docker run \
@@ -33,7 +33,7 @@ docker run \
 <% if(typeof sslConfig === "object")  { %>
   # We don't need to fail the deployment because of a docker hub downtime
   set +e
-  docker pull meteorhacks/mup-frontend-server:latest
+  dao pull meteorhacks/mup-frontend-server:latest
   set -e
   docker run \
     -d \

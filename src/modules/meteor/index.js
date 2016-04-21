@@ -3,12 +3,15 @@ import debug from 'debug';
 import nodemiral from 'nodemiral';
 import uuid from 'uuid';
 import * as _ from 'underscore';
-import {runTaskList, getDockerLogs} from '../utils';
+import {
+  runTaskList,
+  getDockerLogs
+} from '../utils';
 import buildApp from './build.js';
 const log = debug('mup:module:meteor');
 
 
-export function help(/* api */) {
+export function help( /* api */ ) {
   log('exec => mup meteor help');
 }
 
@@ -21,7 +24,7 @@ export function logs(api) {
   }
 
   const args = api.getArgs();
-  const sessions = api.getSessions([ 'meteor' ]);
+  const sessions = api.getSessions(['meteor']);
   return getDockerLogs(config.name, sessions, args);
 }
 
@@ -61,7 +64,7 @@ export function setup(api) {
     });
   }
 
-  const sessions = api.getSessions([ 'meteor' ]);
+  const sessions = api.getSessions(['meteor']);
 
   return runTaskList(list, sessions);
 }
@@ -103,11 +106,11 @@ export function push(api) {
           port: config.env.PORT || 80,
           sslConfig: config.ssl,
           logConfig: config.log,
-          image: config.dockerImage || 'meteorhacks/meteord:base'
+          image: config.dockerImage || 'loongmxbt/meteord:base'
         }
       });
 
-      const sessions = api.getSessions([ 'meteor' ]);
+      const sessions = api.getSessions(['meteor']);
       return runTaskList(list, sessions);
     });
 }
@@ -137,7 +140,7 @@ export function envconfig(api) {
       appName: config.name
     }
   });
-  const sessions = api.getSessions([ 'meteor' ]);
+  const sessions = api.getSessions(['meteor']);
   return runTaskList(list, sessions);
 }
 
@@ -167,8 +170,10 @@ export function start(api) {
     }
   });
 
-  const sessions = api.getSessions([ 'meteor' ]);
-  return runTaskList(list, sessions, {series: true});
+  const sessions = api.getSessions(['meteor']);
+  return runTaskList(list, sessions, {
+    series: true
+  });
 }
 
 export function deploy(api) {
@@ -201,6 +206,6 @@ export function stop(api) {
     }
   });
 
-  const sessions = api.getSessions([ 'meteor' ]);
+  const sessions = api.getSessions(['meteor']);
   return runTaskList(list, sessions);
 }
